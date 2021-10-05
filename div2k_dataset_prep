@@ -1,0 +1,34 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import tensorflow_datasets as tfds
+import cv2
+
+ds_train, ds_val = tfds.load('div2k', split = ['train', 'validation'])
+
+HR_dataset = []
+LR_dataset = []
+for image in ds_train:
+  image['lr'] = image['lr'].numpy()
+  image['hr'] = image['hr'].numpy()
+  image['lr'] = cv2.resize(image['lr'], (160,160), cv2.INTER_CUBIC)
+  image['hr'] = cv2.resize(image['hr'], (480,480), cv2.INTER_CUBIC)
+  image['hr'] = cv2.cvtColor(image['hr'], cv2.COLOR_BGR2GRAY)
+  image['lr'] = cv2.cvtColor(image['lr'], cv2.COLOR_BGR2GRAY)
+  image['lr'] = image['lr']/256.
+  image['hr'] = image['hr']/256.
+  HR_dataset.append(image['hr'])
+  LR_dataset.append(image['lr'])
+  
+HR_val_dataset = []
+LR_val_dataset = []
+for image in ds_val:
+  image['lr'] = image['lr'].numpy()
+  image['hr'] = image['hr'].numpy()
+  image['lr'] = cv2.resize(image['lr'], (160,160), cv2.INTER_CUBIC)
+  image['hr'] = cv2.resize(image['hr'], (480,480), cv2.INTER_CUBIC)
+  image['hr'] = cv2.cvtColor(image['hr'], cv2.COLOR_BGR2GRAY)
+  image['lr'] = cv2.cvtColor(image['lr'], cv2.COLOR_BGR2GRAY)
+  image['lr'] = image['lr']/256.
+  image['hr'] = image['hr']/256.
+  HR_val_dataset.append(image['hr'])
+  LR_val_dataset.append(image['lr'])
