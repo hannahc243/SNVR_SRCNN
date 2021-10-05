@@ -1,0 +1,37 @@
+from tensorflow import keras
+import tensorflow as tf
+from tensorflow.keras import datasets,layers, models, optimizers, activations
+import matplotlib.pyplot as plt
+from sklearn.utils import shuffle
+
+model = keras.models.load_model('*/my_div2k_model')
+
+HR_dataset, LR_dataset = shuffle(HR_dataset, LR_dataset, random_state=18)
+train_images = np.expand_dims(LR_dataset[:1392],-1)
+train_labels = np.expand_dims(HR_dataset[:1392],-1)
+val_images = np.expand_dims(LR_dataset[1392:1566],-1)
+val_labels = np.expand_dims(HR_dataset[1392:1566],-1)
+test_images = np.expand_dims(LR_dataset[1566:],-1)
+test_labels = np.expand_dims(HR_dataset[1566:],-1)
+
+model = models.Sequential()
+model.add(layers.experimental.preprocessing.Resizing(480,480, interpolation='bicubic', input_shape=(160,160,1)))
+model.add(layers.Conv2D(64,(9,9), padding = "same", activation='relu'))
+model.add(layers.Conv2D(32, (3,3), padding = "same", activation='relu'))
+model.add(layers.Conv2D(1,(5,5),padding = "same",  activation='linear'))
+model.summary()
+opt = optimizers.Adam(learning_rate=0.000001)
+model.compile(optimizer=opt,
+            loss='mse')
+
+history = model.fit(train_images,train_labels, epochs=200, validation_data=(val_images, val_labels))
+
+plt.title('Learning Rate = 0.000001')
+plt.plot(history.history['loss'], label='loss')
+plt.plot(history.history['val_loss'], label = 'val_loss')
+plt.legend()
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.show()
+
+model.evaluate(x=test_images,y = test_labels)
