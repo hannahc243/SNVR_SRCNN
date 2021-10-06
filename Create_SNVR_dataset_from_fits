@@ -1,0 +1,85 @@
+import numpy as np
+import glob
+import os
+import pandas as pd 
+import math
+import astropy as astropy
+from astropy.io import fits 
+from astropy.table import Table 
+import cv2
+from PIL import Image, ImageEnhance, ImageOps
+
+Nfilenamelist = glob.glob('/pathtoFITSfiles/*.fits')
+i=0
+j=0
+for file in Nfilenamelist:
+  if file.find('hrc') == -1:
+    AllData = pd.DataFrame(data=None)
+    dat = Table.read(file, format = 'fits')
+    dat.remove_column('status')
+    eventlistdf = dat.to_pandas()
+    eventlistdf['x'] = eventlistdf['x'].replace(np.nan,0)
+    eventlistdf['y'] =  eventlistdf['y'].replace(np.nan, 0)
+    result = pd.concat([AllData, eventlistdf])
+    tempresult1 = result[result['energy']<1000]
+    counts1, Xedges, Yedges = np.histogram2d(tempresult1['x'],tempresult1['y'],bins=480)
+    cv2.imwrite('/pathtodirectory/test.png',counts1)
+    img1 = Image.open('/pathtodirectory/test.png')
+    os.remove('/pathtodirectory/test.png')
+    img11 = ImageEnhance.Contrast(img1).enhance(2)
+    img12 = ImageOps.flip(img1)
+    img13 = ImageOps.mirror(img1)
+    img14 = img1.rotate(90)
+    img15 = img1.rotate(180)
+    img16 = img1.rotate(270)
+    img11.save('/pathtodirectory/im11,%d.tiff'%i)
+    img12.save('/pathtodirectory/im12,%d.tiff'%i)
+    img13.save('/pathtodirectory/im13,%d.tiff'%i)
+    img14.save('/pathtodirectory/im14,%d.tiff'%i)
+    img15.save('/pathtodirectory/im15,%d.tiff'%i)
+    img16.save('/pathtodirectory/im16,%d.tiff'%i)
+    tempresult2 = result[result['energy']>1000]
+    counts2, Xedges, Yedges = np.histogram2d(tempresult2['x'],tempresult2['y'],bins=480)
+    cv2.imwrite('/pathtodirectory/test.png',counts2)
+    img2 = Image.open('/pathtodirectory/test.png')
+    os.remove('/pathtodirectory/test.png')
+    img21 = ImageEnhance.Contrast(img2).enhance(2)
+    img22 = ImageOps.flip(img2)
+    img23 = ImageOps.mirror(img2)
+    img24 = img2.rotate(90)
+    img25 = img2.rotate(180)
+    img26 = img2.rotate(270)
+    img21.save('/pathtodirectory/im21,%d.tiff'%i)
+    img22.save('/pathtodirectory/im22,%d.tiff'%i)
+    img23.save('/pathtodirectory/im23,%d.tiff'%i)
+    img24.save('/pathtodirectory/im24,%d.tiff'%i)
+    img25.save('/pathtodirectory/im25,%d.tiff'%i)
+    img26.save('/pathtodirectory/im26,%d.tiff'%i) 
+    i+=1
+
+  elif file.find('hrc') != -1:
+    AllData = pd.DataFrame(data=None)
+    dat = Table.read(file, format = 'fits')
+    dat.remove_column('status')
+    eventlistdf = dat.to_pandas()
+    eventlistdf['x'] = eventlistdf['x'].replace(np.nan,0)
+    eventlistdf['y'] =  eventlistdf['y'].replace(np.nan, 0)
+    result = pd.concat([AllData, eventlistdf])
+    counts3, Xedges, Yedges = np.histogram2d(result['x'],result['y'],bins=480)
+    cv2.imwrite('/pathtodirectory/test.png',counts3)
+    img3 = Image.open('/pathtodirectory/test.png')
+    os.remove('/pathtodirectory/test.png')
+    img31 = ImageEnhance.Contrast(img3).enhance(2)
+    img32 = ImageOps.flip(img3)
+    img33 = ImageOps.mirror(img3)
+    img34 = img3.rotate(90)
+    img35 = img3.rotate(180)
+    img36 = img3.rotate(270)
+    img31.save('/pathtodirectory/im31,%d.tiff'%j)
+    img32.save('/pathtodirectory/im32,%d.tiff'%j)
+    img33.save('/pathtodirectory/im33,%d.tiff'%j)
+    img34.save('/pathtodirectory/im34,%d.tiff'%j)
+    img35.save('/pathtodirectory/im35,%d.tiff'%j)
+    img36.save('/pathtodirectory/im36,%d.tiff'%j)
+    j+=1
+  
