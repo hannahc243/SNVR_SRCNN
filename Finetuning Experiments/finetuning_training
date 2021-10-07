@@ -3,8 +3,28 @@ import tensorflow as tf
 from tensorflow.keras import datasets,layers, models, optimizers, activations
 import matplotlib.pyplot as plt
 from sklearn.utils import shuffle
+import cv2
+import glob
+import numpy as np
+import random
 
 model = keras.models.load_model('*/my_div2k_model')
+
+Nfilenamelist = glob.glob('pathtodirectory/*.tiff')
+img_LR_data_array = []
+img_HR_data_array = []
+for file in Nfilenamelist:
+  image = cv2.imread(file,0)
+  image_LR = cv2.resize(image,(160,160), cv2.INTER_NEAREST)
+  image_LR = image_LR/256
+  image= image/256
+  img_LR_data_array.append(image_LR)
+  img_HR_data_array.append(image)
+  
+img_LR_data_array = np.array(img_LR_data_array)
+img_HR_data_array = np.array(img_HR_data_array)
+
+HR_dataset, LR_dataset  = img_HR_data_array, img_LR_data_array
 
 HR_dataset, LR_dataset = shuffle(HR_dataset, LR_dataset, random_state=18)
 train_images = np.expand_dims(LR_dataset[:1392],-1)
