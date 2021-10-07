@@ -1,1 +1,1 @@
-# SRCNN_SNVR
+# SNVR_SRCNN
