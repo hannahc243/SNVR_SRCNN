@@ -32,9 +32,10 @@ To prepare the SNVR dataset:
 2. Add a line to save the model to your preferred location.
 3. Run code.
 
+## Image Quality Assessment Metric Computation
+Fill in details here about how to calulate IQA scores on the test dataset.
 
 ## Training on New Data
 **Fill in details on how to train the model on your own data**\
-
 
 Please contact Hannah Collier at hannah.collier.20@ucl.ac.uk if you have any questions or are interested in contributing!
