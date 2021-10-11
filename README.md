@@ -37,7 +37,4 @@ To prepare the SNVR dataset:
 2. Fill in the path to the saved model which you want to test on line 35.
 3. Run code.
 
-## Training on New Data
-**Fill in details on how to train the model on your own data**
-
 Please contact Hannah Collier at hannah.collier.20@ucl.ac.uk if you have any questions or are interested in contributing!
