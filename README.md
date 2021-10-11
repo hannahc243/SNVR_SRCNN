@@ -33,7 +33,9 @@ To prepare the SNVR dataset:
 3. Run code.
 
 ## Image Quality Assessment Metric Computation
-Fill in details here about how to calulate IQA scores on the test dataset.
+1. Fill in the path to the folder in which you saved the test images on line 5 of Calculate_IQA_on_test_images.
+2. Fill in the path to the saved model which you want to test on line 35.
+3. Run code.
 
 ## Training on New Data
 **Fill in details on how to train the model on your own data**
