@@ -1,6 +1,9 @@
 import glob
 import cv2
 from statistics import mean
+from skimage.metrics import peak_signal_noise_ratio as compare_psnr
+from skimage.metrics import mean_squared_error as compare_mse
+from skimage.metrics import structural_similarity as compare_ssim
 
 Nfilenamelist= glob.glob('pathtodirectorywith59testimages/*.tiff')
 
@@ -8,7 +11,7 @@ def ssim_array(model):
   ssim_array = []
   for file in Nfilenamelist:
     image = cv2.imread(file,0)    
-    image2 = cv2.resize(image, (120,120), cv2.INTER_NEAREST)
+    image2 = cv2.resize(image, (160,160), cv2.INTER_NEAREST)
     output = np.squeeze(model(np.expand_dims(np.expand_dims(image2,0),3)))
     ssim_array.append(compare_ssim(image, output))
   return ssim_array
@@ -17,7 +20,7 @@ def psnr_array(model):
   psnr_array = []
   for file in Nfilenamelist:
     image = cv2.imread(file,0)    
-    image2 = cv2.resize(image, (120,120), cv2.INTER_NEAREST)
+    image2 = cv2.resize(image, (160,160), cv2.INTER_NEAREST)
     output = np.squeeze(model(np.expand_dims(np.expand_dims(image2,0),3)))
     psnr_array.append(compare_psnr(image, output))
   return psnr_array
@@ -27,12 +30,12 @@ def mse_array(model):
   mse_array = []
   for file in Nfilenamelist:
     image = cv2.imread(file,0)    
-    image2 = cv2.resize(image, (120,120), cv2.INTER_NEAREST)
+    image2 = cv2.resize(image, (160,160), cv2.INTER_NEAREST)
     output = np.squeeze(model(np.expand_dims(np.expand_dims(image2,0),3)))
     mse_array.append(compare_mse(image, output))
   return mse_array
 
-model_finetuned_20 = keras.models.load_model('path_to_saved_model')
-psnr_score = mean(psnr_array_(model_finetuned_20))
-mse_score = mean(mse_array_(model_finetuned_20))
-ssim_score = mean(ssim_array(model_finetuned_20))
+model_finetuned = keras.models.load_model('path_to_saved_model')
+psnr_score = mean(psnr_array_(model_finetuned))
+mse_score = mean(mse_array_(model_finetuned))
+ssim_score = mean(ssim_array(model_finetuned))
