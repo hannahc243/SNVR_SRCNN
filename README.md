@@ -8,7 +8,7 @@ Co-authors: Hannah Collier, William R. Dunn, Yu Tao, Graziella Branduardi Raymon
 SNVR SRCNN is a deep learning based method for performing single image super resolution restoration on sparse X-ray astronomical imagery.
 
 # SNVR Dataset Preparation:
-The SNVR dataset can be prepared by downloading the relevent .fits files from https://cda.harvard.edu/chaser/. The code "Create SNVR Dataset from Fits", reads in the fits files and performs the outlined preprocessing, the images are saved as .tiff files.
+The SNVR dataset can be prepared by downloading the relevent .fits files from https://cda.harvard.edu/chaser/. The code "Create SNVR Dataset from Fits", reads in the fits files and performs the outlined preprocessing, the images are saved as .tiff files. Refer to txt file with file ids. 
 
 # Training a Model
 ## How to Train the SNVR model
