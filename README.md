@@ -1,7 +1,7 @@
 # SNVR SRCNN
 Super resolving sparse astronomical X-ray imagery using deep learning.\
 Reference Paper: **Link to paper** \
-Corresponding Author: Hannah Collier, ETH Zürich, FHNW.\
+Corresponding Author: Hannah Collier, FHNW, ETH Zürich.\
 Co-authors: Hannah Collier, William R. Dunn, Yu Tao, Graziella Branduardi Raymont, Jan Peter Muller.
 
 # Description: 
